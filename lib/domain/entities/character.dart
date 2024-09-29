@@ -1,9 +1,11 @@
+import 'package:rick_and_morty/domain/entities/location.dart';
+
 class Character {
   final int id;
   final String name;
   final String status;
   final String type;
-  final Object location;
+  final Location location;
   final String image;
 
   Character({

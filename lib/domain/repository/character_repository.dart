@@ -1,5 +1,5 @@
-import 'package:rick_and_morty/domain/models/character.dart';
+import 'package:rick_and_morty/data/models/character.dart';
 
-abstract class CharacterRepository {
-  Future<List<Character>> getCharacter();
+abstract class AbstractCharacterRepository {
+  Future<List<Character>> getCharacters();
 }
