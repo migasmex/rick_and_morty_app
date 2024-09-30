@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/data/models/character.dart';
 import 'package:rick_and_morty/data/repository/character_repository.dart';
+import 'package:rick_and_morty/domain/usecase/get_character_usecase.dart';
 import 'package:rick_and_morty/feature/bloc/character_list_bloc.dart';
 
 class CharacterList extends StatefulWidget {
@@ -21,7 +22,9 @@ class _CharacterListState extends State<CharacterList> {
   void initState() {
     super.initState();
     final characterRepository = CharacterRepository(dio: dio);
-    characterListBloc = CharacterListBloc(characterRepository);
+    final getCharactersUseCase =
+        GetCharactersUseCase(repository: characterRepository);
+    characterListBloc = CharacterListBloc(getCharactersUseCase);
     characterListBloc.add(LoadCharacterListEvent());
   }
 
@@ -30,7 +33,7 @@ class _CharacterListState extends State<CharacterList> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 47, 47, 52),
         appBar: AppBar(
-          title: Text('Character list'),
+          title: const Text('Character list'),
           centerTitle: true,
           foregroundColor: Colors.white,
           backgroundColor: const Color.fromARGB(255, 47, 47, 52),
@@ -98,7 +101,7 @@ class CharacterCard extends StatelessWidget {
                 children: [
                   Text(
                     character.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -113,23 +116,23 @@ class CharacterCard extends StatelessWidget {
                               : character.status == "Dead"
                                   ? Colors.red
                                   : Colors.grey),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Expanded(
                         child: Text(
                           '${character.status} - ${character.species}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Color.fromARGB(255, 240, 240, 240),
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "Last known location:",
                     style: TextStyle(
                       color: Color.fromARGB(255, 169, 168, 168),
@@ -137,20 +140,20 @@ class CharacterCard extends StatelessWidget {
                   ),
                   Text(
                     character.location.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "First seen is:",
                     style: TextStyle(
                       color: Color.fromARGB(255, 169, 168, 168),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "somewhere",
                     style: TextStyle(
                       color: Colors.white,
