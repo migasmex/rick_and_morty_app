@@ -32,12 +32,10 @@ class _CharacterListState extends State<CharacterList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 47, 47, 52),
         appBar: AppBar(
-          title: const Text('Character list'),
-          centerTitle: true,
           foregroundColor: Colors.white,
-          backgroundColor: const Color.fromARGB(255, 47, 47, 52),
+          centerTitle: true,
+          title: const Text('Character list'),
         ),
         body: BlocBuilder<CharacterListBloc, CharacterListState>(
           bloc: characterListBloc,
@@ -56,7 +54,7 @@ class _CharacterListState extends State<CharacterList> {
             } else if (state is CharacterListError) {
               return Center(child: Text("Error: ${state.message}"));
             } else {
-              return const Center(child: Text("unlucky"));
+              return const Center(child: Text("Something went wrong"));
             }
           },
         ));
@@ -87,97 +85,121 @@ class CharacterCard extends StatelessWidget {
         child: Container(
           height: 150,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 58, 58, 58),
+            color: Color.fromARGB(255, 58, 58, 58),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(character.image),
-                    )),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      character.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.circle,
-                            size: 10,
-                            color: character.status == "Alive"
-                                ? Colors.green
-                                : character.status == "Dead"
-                                    ? Colors.red
-                                    : Colors.grey),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Expanded(
-                          child: Text(
-                            '${character.status} - ${character.species}',
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 240, 240, 240),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "Last known location:",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 169, 168, 168),
-                      ),
-                    ),
-                    Text(
-                      character.location.name,
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Text(
-                      "First seen is:",
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 169, 168, 168),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        character.episodeName ?? 'unknown',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              CharacterImage(imageUrl: character.image),
+              const SizedBox(width: 10),
+              Expanded(child: CharacterInfo(character: character)),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class CharacterImage extends StatelessWidget {
+  const CharacterImage({super.key, required this.imageUrl});
+  final String imageUrl;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 150,
+      width: 150,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: NetworkImage(imageUrl),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+}
+
+class CharacterInfo extends StatelessWidget {
+  const CharacterInfo({required this.character});
+
+  final Character character;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          character.name,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        CharacterStatusRow(
+            status: character.status, species: character.species),
+        const SizedBox(height: 10),
+        const Text(
+          "Last known location:",
+          style: TextStyle(color: Color.fromARGB(255, 169, 168, 168)),
+        ),
+        Expanded(
+          child: Text(
+            character.location.name,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Text(
+          "First seen is:",
+          style: TextStyle(color: Color.fromARGB(255, 169, 168, 168)),
+        ),
+        Expanded(
+          child: Text(
+            character.episodeName ?? 'unknown',
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CharacterStatusRow extends StatelessWidget {
+  const CharacterStatusRow(
+      {super.key, required this.status, required this.species});
+
+  final String status;
+  final String species;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          Icons.circle,
+          size: 10,
+          color: status == "Alive"
+              ? Colors.green
+              : status == "Dead"
+                  ? Colors.red
+                  : Colors.grey,
+        ),
+        const SizedBox(width: 5),
+        Expanded(
+          child: Text(
+            '$status - $species',
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color.fromARGB(255, 240, 240, 240),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
