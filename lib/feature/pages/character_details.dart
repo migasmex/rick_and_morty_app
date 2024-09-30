@@ -43,7 +43,7 @@ class CharacterDetailsPage extends StatelessWidget {
               Text('Location: ${character.location.name}', style: textStyle),
               Text(
                   character.type == ''
-                      ? 'Type: Unknown'
+                      ? 'Type: unknown'
                       : 'Type: ${character.type}',
                   style: textStyle),
               Text(
@@ -60,6 +60,10 @@ class CharacterDetailsPage extends StatelessWidget {
               ),
               Text(
                 "Character created in: ${character.created}",
+                style: textStyle,
+              ),
+              Text(
+                "Episode: ${character.episodeName ?? 'Unknown'}",
                 style: textStyle,
               ),
             ],

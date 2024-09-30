@@ -11,9 +11,11 @@ class CharacterRepository implements AbstractCharacterRepository {
   Future<List<Character>> getCharacters() async {
     try {
       List<Character> charactersFromApi = await fetchCharactersFromApi();
+      await fetchEpisodeNameFromApi(charactersFromApi);
       return charactersFromApi;
     } catch (e) {
-      throw Exception(e);
+      print('Error fetching: $e');
+      return [];
     }
   }
 
@@ -35,5 +37,21 @@ class CharacterRepository implements AbstractCharacterRepository {
       allCharacters.addAll(characters);
     }
     return allCharacters;
+  }
+
+  Future<void> fetchEpisodeNameFromApi(List<Character> characters) async {
+    for (var character in characters) {
+      if (character.episode.isNotEmpty) {
+        String episodeUrl = character.episode.first;
+        try {
+          final response = await dio.get(episodeUrl);
+          final data = response.data;
+          String episodeName = data['name'];
+          character.episodeName = episodeName;
+        } catch (e) {
+          print('Error fetching: $e');
+        }
+      }
+    }
   }
 }

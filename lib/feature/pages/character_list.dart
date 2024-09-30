@@ -163,10 +163,12 @@ class CharacterCard extends StatelessWidget {
                         color: Color.fromARGB(255, 169, 168, 168),
                       ),
                     ),
-                    const Text(
-                      "somewhere",
-                      style: TextStyle(
-                        color: Colors.white,
+                    Expanded(
+                      child: Text(
+                        character.episodeName ?? 'unknown',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ],

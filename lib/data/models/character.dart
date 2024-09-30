@@ -16,6 +16,7 @@ class Character {
   final Location origin;
   final String url;
   final String created;
+  String? episodeName;
 
   Character({
     required this.id,
@@ -30,6 +31,7 @@ class Character {
     required this.origin,
     required this.url,
     required this.created,
+    this.episodeName,
   });
 
   factory Character.fromJson(Map<String, dynamic> json) =>
