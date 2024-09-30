@@ -29,7 +29,7 @@ class CharacterRepository implements AbstractCharacterRepository {
           "https://rickandmortyapi.com/api/character",
           queryParameters: {'page': page});
       final data = response.data;
-      final List<Character> characters = (response.data['results'] as List)
+      final List<Character> characters = (data['results'] as List)
           .map((characterJson) => Character.fromJson(characterJson))
           .toList();
       allCharacters.addAll(characters);

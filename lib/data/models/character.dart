@@ -11,6 +11,11 @@ class Character {
   final Location location;
   final String image;
   final List<String> episode;
+  final String type;
+  final String gender;
+  final Location origin;
+  final String url;
+  final String created;
 
   Character({
     required this.id,
@@ -20,6 +25,11 @@ class Character {
     required this.location,
     required this.image,
     required this.episode,
+    required this.type,
+    required this.gender,
+    required this.origin,
+    required this.url,
+    required this.created,
   });
 
   factory Character.fromJson(Map<String, dynamic> json) =>

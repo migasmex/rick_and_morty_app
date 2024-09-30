@@ -5,6 +5,7 @@ import 'package:rick_and_morty/data/models/character.dart';
 import 'package:rick_and_morty/data/repository/character_repository.dart';
 import 'package:rick_and_morty/domain/usecase/get_character_usecase.dart';
 import 'package:rick_and_morty/feature/bloc/character_list_bloc.dart';
+import 'package:rick_and_morty/feature/pages/character_details.dart';
 
 class CharacterList extends StatefulWidget {
   const CharacterList({super.key});
@@ -72,97 +73,107 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        height: 150,
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 58, 58, 58),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 150,
-              width: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    image: NetworkImage(character.image),
-                  )),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    character.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.circle,
-                          size: 10,
-                          color: character.status == "Alive"
-                              ? Colors.green
-                              : character.status == "Dead"
-                                  ? Colors.red
-                                  : Colors.grey),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: Text(
-                          '${character.status} - ${character.species}',
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 240, 240, 240),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "Last known location:",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 169, 168, 168),
-                    ),
-                  ),
-                  Text(
-                    character.location.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "First seen is:",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 169, 168, 168),
-                    ),
-                  ),
-                  const Text(
-                    "somewhere",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CharacterDetailsPage(
+                      character: character,
+                    )));
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Container(
+          height: 150,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 58, 58, 58),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 150,
+                width: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: NetworkImage(character.image),
+                    )),
               ),
-            ),
-          ],
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      character.name,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Icon(Icons.circle,
+                            size: 10,
+                            color: character.status == "Alive"
+                                ? Colors.green
+                                : character.status == "Dead"
+                                    ? Colors.red
+                                    : Colors.grey),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${character.status} - ${character.species}',
+                            style: const TextStyle(
+                                color: Color.fromARGB(255, 240, 240, 240),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "Last known location:",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 169, 168, 168),
+                      ),
+                    ),
+                    Text(
+                      character.location.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "First seen is:",
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 169, 168, 168),
+                      ),
+                    ),
+                    const Text(
+                      "somewhere",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

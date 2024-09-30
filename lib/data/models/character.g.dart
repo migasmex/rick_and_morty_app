@@ -15,6 +15,11 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       image: json['image'] as String,
       episode:
           (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
+      type: json['type'] as String,
+      gender: json['gender'] as String,
+      origin: Location.fromJson(json['origin'] as Map<String, dynamic>),
+      url: json['url'] as String,
+      created: json['created'] as String,
     );
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
@@ -25,4 +30,9 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'location': instance.location,
       'image': instance.image,
       'episode': instance.episode,
+      'type': instance.type,
+      'gender': instance.gender,
+      'origin': instance.origin,
+      'url': instance.url,
+      'created': instance.created,
     };

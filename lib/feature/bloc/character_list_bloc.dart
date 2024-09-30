@@ -19,5 +19,4 @@ class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
       }
     });
   }
-  // final CharacterRepository characterRepository;
 }
